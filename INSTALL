@@ -1,0 +1,32 @@
+**************************************************************
+Setup Instructions to install Blog server on an Ubuntu Machine
+
+1. Install Mongo DB (v3.0.X) on the Database server and start the mongod instance
+   Instructions to install and start mongodb on Ubuntu
+   https://docs.mongodb.org/v3.0/tutorial/install-mongodb-on-ubuntu/
+
+2. Install NodeJS and npm package manager
+   sudo apt-get install nodejs
+   sudo apt-get install npm
+
+   or Follow the below link to install nodejs and npm
+
+   https://nodejs.org/en/download/package-manager/
+
+3. Extract the blog_server.zip that you have downloaded
+
+4. Go to the directory
+   cd blog_server
+
+5. Execute the below command, This will install all the dependent packages
+   npm install
+
+6. Open blog.conf file and fill in the necessary details
+
+7. Execute the following command to start the blog server
+   nohup node blog_server.js > blog.log &
+
+   That's it your blog server should be up and running :)
+
+***************************************************************
+

@@ -1,0 +1,205 @@
+User Stories:
+
+# An admin should be able to add blog posts. Blog posts have a unique random identifier, a title and plain text where paragraphs are separated by two new-line characters
+
+ Use Add Blog Post and Edit Blog Post
+
+# A viewer should be able to view all blog posts (list-mode) starting with first 5 and then the next 5 and so on. This view will not have any comments.
+
+ Use List Blog Posts API
+
+# A viewer should be able to click on one of these blogs to view it in full-mode. In full-mode, all past comments on the text are visible next to the text. Also, the viewer is able to comment on a paragraph of text. In essence, the comment is on a paragraph.
+
+ To view the comments adjacent to the paragraphs in blog post
+
+ Call the API View Blog Post and View Comments with that post ID, Then in UI we can show the comments adjacent to the paragraphs. 
+
+
+API Reference
+
+Following API's are available 
+
+1. Add Blog Post
+----------------
+   
+   URL: 'http://<serv-addr>:<port>/add_post'
+   JSON format:
+
+   {"id":"4fc518",
+    "title":"Apple Iphone SE",
+    "content":[
+        {"p_id":"3hd1","p_txt":"This phone is not upto the mark"},
+        {"p_id":"4tvu", "p_txt":"I dont like this phone, many things could have been better"}
+   ]}
+   id: Unique identifier for the post
+   title: Title of the blog post
+   content: Post Content segregated by paragraphs
+   p_id: Unique id for each paragraph ( Paragraphs are separated by two \n\n }
+   p_txt: Text in the paragraph
+    
+   U can add the blog post with the following command
+
+   curl -H "Content-Type: application/json" --data '{"id":"4fc518","title":"Apple Iphone SE","content":[{"p_id":"3hd1","p_txt":"This phone is too expensive"},{"p_id":"4tvu", "p_txt":"I dont like this phone, many things could have been better"}]}' http://localhost:4000/add_post
+
+2. Edit Blog Post
+-----------------
+
+   URL: 'http://<serv-addr>:<port>/edit_post'
+   JSON format:
+
+   {"id":"4fc518","title":"Apple Iphone SE","content":[{"p_id":"3hd1","p_txt":"This phone is too expensive"}}]}
+
+   id: Identifier of the post which is under edit
+   title: Title of the Post
+   content: Post Content segregated by paragraphs
+   p_id:  Unique id for each paragraph
+   p_txt: Text in the paragraph
+
+   Note:
+   This will delete the all the comments associated with deleted paragraphs
+
+3. List Blog Posts
+------------------
+
+   URL: 'http://<serv-addr>:<port>/list_posts?lim=2&page=1'
+
+   Query Parameters:
+   lim: No of posts to be displayed 
+   Page: Page no
+
+   eg: Above URL will display 2 posts sorted by created time in descending order
+
+{
+ "success": true,
+ "data": [
+  {
+   "_id": "5fc918",
+   "title": "Apple Iphone SE"
+  },
+  {
+   "_id": "4fc918",
+   "title": "Apple Iphone SE"
+  }
+ ]
+}
+
+4. View a specific Blog Post
+----------------------------
+
+   URL: 'http://<serv-addr>:<port>/view_post?id=<post_id>'
+
+   Query Parameters:
+{
+ "success": true,
+ "data": {
+  "_id": "4fc918",
+  "title": "Apple Iphone SE",
+  "cnt": [
+   {
+    "p_id": "3hd1",
+    "p_txt": "This phone is not upto the mark"
+   },
+   {
+    "p_id": "4tvu",
+    "p_txt": "I dont like this phone, many things could have been better"
+   }
+  ],
+  "created_at": 1458640735029
+ }
+}
+
+5. Delete Blog Post
+-------------------
+
+   URL: 'http://<serv-addr>:<port>/del_post?id=<post_id>'
+
+   Query Parameters:
+   id: ID of the Blog Post
+
+   Note: This will delete all the comments associated with that Blog Post
+
+6. Add Comment
+--------------
+
+   URL: 'http://<serv-addr>:<port>/add_comment'
+
+   JSON format:
+
+   {"id":"56tuv", "post_id":"4fc518","p_id":"4tvu","data":"Go to Hell"}
+
+   id: Unique id for the comment
+   post_id: Blog post id for which this comment is being added
+   p_id: Paragraph id to which comment is being added
+   data: Comment text
+
+   For text highlighted within the paragraph, we can bind this either using start_offset/end_offset
+   or by indexing the highlighted text
+
+   Sample add comment
+   
+   curl -H "Content-Type: application/json" --data '{"id":"56tuv", "post_id":"4fc518","p_id":"4tvu","data":"Go to Hell"}' http://localhost:4000/add_comment
+
+
+7. Edit Comment
+---------------
+
+   URL: 'http://<serv-addr>:<port>/edit_comment'
+
+   JSON format:
+
+   {"id":"06tuv", "post_id":"4fc518","p_id":"3hd1","data":"I am sorry"}
+
+   id: Unique id for the comment
+   post_id: Blog post id for which this comment is being added
+   p_id: Paragraph id to which comment is being added
+   data: Comment text
+
+   Sample Edit comment
+
+   curl -H "Content-Type: application/json" --data '{"id":"06tuv", "post_id":"4fc518","p_id":"3hd1","data":"I am sorry"}' http://localhost:4000/edit_comment
+
+8. View all comments for a particular blog post
+-----------------------------------------------
+
+   URL: 'http://<serv-addr>:<port>/comments?po_id=<post_id>'
+
+   Query parameter:
+   po_id: Blog post id for which you want to see the comments
+
+   Sample Response:
+{
+  "success": true,
+  "data": [
+  {
+   "_id": "56tuv",
+   "po_id": "4fc518",
+   "p_id": "4tvu",
+   "data": "Go to Hell",
+   "created_at": 1458715964631,
+   "ver": 1
+  },
+  {
+   "_id": "51tuv",
+   "po_id": "4fc518",
+   "p_id": "4tvu",
+   "data": "Go to Hell",
+   "created_at": 1458715971542,
+   "ver": 1
+  }
+ ]
+}
+
+9. Delete a particular comment
+------------------------------
+
+   URL: 'http://<serv-addr>:<port>/del_comment?id=<comment_id>'
+
+   Query parameter:
+   id: Comment id which needs to be deleted
+
+   Sample Response:
+
+{
+     "success": true,
+     "data": "Successfully Deleted"
+}
