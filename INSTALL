@@ -14,13 +14,13 @@ Setup Instructions to install Blog server on an Ubuntu Machine
 
    https://nodejs.org/en/download/package-manager/
 
-3. Extract the blog_server.zip that you have downloaded
+3. Extract the blog server zip file that you have downloaded
 
-4. Go to the directory
-   cd blog_server
+4. Go to the extracted directory
 
 5. Execute the below command, This will install all the dependent packages
    npm install
+   Wait till npm install all the dependent packages
 
 6. Open blog.conf file and fill in the necessary details
 
@@ -30,4 +30,3 @@ Setup Instructions to install Blog server on an Ubuntu Machine
    That's it your blog server should be up and running :)
 
 ***************************************************************
-
