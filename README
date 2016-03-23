@@ -2,7 +2,7 @@ User Stories:
 
 # An admin should be able to add blog posts. Blog posts have a unique random identifier, a title and plain text where paragraphs are separated by two new-line characters
 
- Use Add Blog Post and Edit Blog Post
+ Use Add Blog Post and Edit Blog Post API
 
 # A viewer should be able to view all blog posts (list-mode) starting with first 5 and then the next 5 and so on. This view will not have any comments.
 
@@ -12,15 +12,16 @@ User Stories:
 
  To view the comments adjacent to the paragraphs in blog post
 
- Call the API View Blog Post and View Comments with that post ID, Then in UI we can show the comments adjacent to the paragraphs. 
+ Use the API View Blog Post and View Comments API with that post ID, Then in UI we can show the comments adjacent to the paragraphs. 
 
 
 API Reference
+--------------
 
 Following API's are available 
 
 1. Add Blog Post
-----------------
+-----------------
    
    URL: 'http://<serv-addr>:<port>/add_post'
    JSON format:
