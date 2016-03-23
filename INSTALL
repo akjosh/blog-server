@@ -6,6 +6,7 @@ Setup Instructions to install Blog server on an Ubuntu Machine
    https://docs.mongodb.org/v3.0/tutorial/install-mongodb-on-ubuntu/
 
 2. Install NodeJS and npm package manager
+   nodejs version >= v0.12
    sudo apt-get install nodejs
    sudo apt-get install npm
 
